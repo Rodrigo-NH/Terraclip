@@ -6,17 +6,18 @@ import os
 import requests
 import math
 import copy
+from xml.etree import ElementTree
 from gdalwrap import Datasource, Transformation, makepoint
 
 class Terraclip():
     def __init__(self, inputshape):
-        # super().__init__(inputshape)
         self.inputshape = inputshape
-        self.dirset = False
         self._Initdata()
-        # self.outkml()
 
     def _Initdata(self):
+        if not os.path.isfile(self.inputshape):
+            raise InvalidInputFile("Input file " + self.inputshape + " doesn't exist.")
+
         self.flightalt = 200
         self.tolerance = 5
         self.stepdistance = 500
@@ -35,24 +36,18 @@ class Terraclip():
             'GEDI_L3'
         ]
 
-    def setofolder(self, outputfolder):
-        self.dirset = True
-        self.outpath = os.path.join(outputfolder)
-        self.demdir = os.path.join(self.outpath, 'dem')
-        if not os.path.exists(self.demdir):
-            os.mkdir(self.demdir)
-
-    def setdem(self, *kwargs, OTsource='skipOT', OTapi='yourOT_API_key'):
+    def setdem(self, dempath, OTsource='skipOT', OTapi='yourOT_API_key'):
         if OTsource != 'skipOT':
-            if self.dirset is False:
-                basedir = os.path.dirname(self.inputshape)
-                self.setofolder(basedir)
+            demdir = os.path.join(dempath)
+            if not os.path.exists(demdir):
+                os.mkdir(demdir)
+            self.demdir = demdir
             self.OTsource = OTsource
             self._Readinput()
             self._GetOTdem(OTapi)
-        elif kwargs[0] is not None:
+        else:
             self._Readinput()
-            self.dempath = kwargs[0]
+            self.dempath = os.path.join(dempath)
 
     def setparams(self, flightalt, tolerance, verticedistance, Takeoff=False, Land=False):
         self.flightalt = flightalt
@@ -71,8 +66,10 @@ class Terraclip():
         return self.demdata.min()
 
     def listOTsources(self):
-        for dem in self.validOT:
-            print(dem)
+        return self.validOT
+
+    def maxinc(self):
+        return self.maxinclination[3]
 
     def execute(self):
         self._Compute()
@@ -388,3 +385,9 @@ class InvalidOTException(Exception):
     def __init__(self, message):
         message = message
         super().__init__(message)
+
+class InvalidInputFile(Exception):
+    def __init__(self, message):
+        message = message
+        super().__init__(message)
+
