@@ -71,6 +71,12 @@ class Terraclip():
     def maxinc(self):
         return self.maxinclination[3]
 
+    def getarea(self):
+        print(self.inputextent2)
+        Xextent =  abs(self.inputextent2[0] - self.inputextent2[1])
+        Yextent =  abs(self.inputextent2[2] - self.inputextent2[3])
+        return [Xextent, Yextent, Xextent * Yextent]
+
     def execute(self):
         self._Compute()
 
@@ -351,6 +357,7 @@ class Terraclip():
         inputgeomtemp = inputtrans2.transform(inputgeom)
         self.inputextent = inputgeomtemp.GetEnvelope()
         self.inputgeomt = inputtrans.transform(inputgeom)
+        self.inputextent2 = self.inputgeomt.GetEnvelope()
 
     def _GetOTdem(self, OTapi):
         south = self.inputextent[2] - 0.00084 * 3

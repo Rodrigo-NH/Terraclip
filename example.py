@@ -26,8 +26,6 @@ else:
 # Set your output parameters. Sntax 'setparams(<flightAltitude>, <toleranceIn%>, <maxDistBetweenWPs>, Takeoff=<bool>, Land=<bool>)'
 # Takeoff and Land are optional and defaults to 'False'
 tr.setparams(120, 0, 500, Takeoff=False, Land=True)
-# From the input geometry, get from envelope [<total X extent>, <total Y extent>, <area in square meters>]
-print(tr.getarea())
 # execute calculations
 tr.execute()
 # Print some stats

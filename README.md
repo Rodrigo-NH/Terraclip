@@ -11,7 +11,7 @@ The output mission file contains WP's set to 'ABSOLUTE' heights for better missi
 - Downloads necessary DEM scenes automatically (requires a Open Topography API key https://opentopography.org/) or loads custom user DEM.
 - Outputs a stat file containing minimal flight altitude, max flight altitude, max generated inclination and suggested RTL_ALT (max DEM scene altitude plus ```<flightAlt>```)
 ## How it works
-- Draw a KML path in GoogleEarth containing desired flight path. Export the path do a KML/KMZ file. Generated mission will respect the vertices from your path, converting vertices to WP's.  
+- Draw a KML path in GoogleEarth containing desired flight path. Export the path to a KML/KMZ file. Generated mission will respect the vertices from your path, converting vertices to WP's.  
    
 - Check example.py about how to use it. The parameters are set by the command:  
   
