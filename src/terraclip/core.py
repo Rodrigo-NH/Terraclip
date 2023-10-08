@@ -13,6 +13,7 @@ class Terraclip():
     def __init__(self, inputshape):
         self.inputshape = inputshape
         self._Initdata()
+        self._Readinput()
 
     def _Initdata(self):
         if not os.path.isfile(self.inputshape):
@@ -43,7 +44,6 @@ class Terraclip():
                 os.mkdir(demdir)
             self.demdir = demdir
             self.OTsource = OTsource
-            self._Readinput()
             self._GetOTdem(OTapi)
         else:
             self._Readinput()
@@ -72,7 +72,6 @@ class Terraclip():
         return self.maxinclination[3]
 
     def getarea(self):
-        print(self.inputextent2)
         Xextent =  abs(self.inputextent2[0] - self.inputextent2[1])
         Yextent =  abs(self.inputextent2[2] - self.inputextent2[3])
         return [Xextent, Yextent, Xextent * Yextent]

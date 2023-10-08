@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "terraclip"
-version = "1.0b1"
+version = "1.0b2"
 authors = [
   { name="Rodrigo Nascimento Hernandez", email="rodrigomdev@gmail.com" },
 ]
